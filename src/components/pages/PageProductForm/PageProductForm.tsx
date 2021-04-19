@@ -71,7 +71,7 @@ const Form = (props: FormikProps<FormikValues>) => {
         <Grid item xs={12} sm={4}>
           <Field
             component={TextField}
-            name="count"
+            name="stock.count"
             label="Count"
             fullWidth
             autoComplete="off"
@@ -102,14 +102,14 @@ const emptyValues: any = ProductSchema.cast();
 
 export default function PageProductForm() {
   const history = useHistory();
-  const {id} = useParams();
+  const {id} = useParams<any>();
   const [product, setProduct] = useState<Product | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const onSubmit = (values: FormikValues) => {
     const formattedValues = ProductSchema.cast(values);
     const productToSave = id ? {...ProductSchema.cast(formattedValues), id} : formattedValues;
-    axios.put(`${API_PATHS.bff}/product`, productToSave)
+    axios.post(`${API_PATHS.bff}/products`, productToSave)
       .then(() => history.push('/admin/products'));
   };
 

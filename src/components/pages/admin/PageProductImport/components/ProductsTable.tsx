@@ -16,7 +16,7 @@ export default function ProductsTable() {
   const [products, setProducts] = useState<any>([]);
 
   useEffect(() => {
-    axios.get(`${API_PATHS.bff}/product`)
+    axios.get(`${API_PATHS.bff}/products`)
       .then(res => setProducts(res.data));
   }, []);
 
@@ -50,7 +50,7 @@ export default function ProductsTable() {
               </TableCell>
               <TableCell align="right">{product.description}</TableCell>
               <TableCell align="right">{formatAsPrice(product.price)}</TableCell>
-              <TableCell align="right">{product.count}</TableCell>
+              <TableCell align="right">{product?.stock?.count || 0}</TableCell>
               <TableCell align="right">
                 <Button size="small" color="primary" component={Link} to={`/admin/product-form/${product.id}`}>
                   Manage
